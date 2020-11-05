@@ -2,21 +2,15 @@ import './main.css';
 import ApiService from './fetchCountries';
 const countryApiService = new ApiService();
 const debounce = require('lodash.debounce');
-import counteryCardTpl from './templates/main.hbs';
-
-import '@pnotify/core/dist/BrightTheme.css';
-import '@pnotify/mobile/dist/PNotifyMobile.css';
-
-import { alert, defaultModules } from '@pnotify/core/dist/PNotify.js';
-import * as PNotifyMobile from '@pnotify/mobile/dist/PNotifyMobile.js';
-
-defaultModules.set(PNotifyMobile, {});
+import countryCardTpl from './templates/main.hbs';
+import countrySearch from './templates/search.hbs';
 
 const refs = {
   inputSearch: document.querySelector('.input-search'),
   countryContainer: document.querySelector('.container'),
 };
 
+// Search
 refs.inputSearch.addEventListener('input', debounce(onSearch, 500));
 
 function onSearch(event) {
@@ -26,18 +20,40 @@ function onSearch(event) {
 
   countryApiService
     .fetchCountries(searchQuery)
-    .then(countryMarkup)
-    .catch(alert('Notice me, senpai!'));
+    .then(countryChanger)
+    .catch(myError);
 }
 
+//hanlebars Markup
 function countryMarkup(countries) {
+  refs.countryContainer.innerHTML = '';
   refs.countryContainer.insertAdjacentHTML(
     'beforeend',
-    counteryCardTpl(countries),
+    countryCardTpl(countries),
   );
 }
 
-PNotify.error({
-  title: 'Oh No!',
-  text: 'Something terrible happened.',
+function countrySearchMarkup(countries) {
+  refs.countryContainer.innerHTML = '';
+  refs.countryContainer.insertAdjacentHTML(
+    'beforeend',
+    countrySearch(countries),
+  );
+}
+
+function countryChanger(countries) {
+  if (countries.length >= 2 && countries.length <= 10) {
+    countrySearchMarkup(countries);
+  }
+
+  countryMarkup(countries);
+}
+
+// Error settings
+import { error } from '@pnotify/core';
+import '@pnotify/core/dist/BrightTheme.css';
+import '@pnotify/core/dist/Material.css';
+
+const myError = error({
+  text: 'To many matches found. Please enter a more specific query!',
 });
