@@ -4,12 +4,19 @@
   "main": "index.js",
   "scripts": {
     "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "build": "parcel build src/index.html --public-url /goit-js-hw-12-countries-2/",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RomanPalna/goit-js-hw-12-countries-2"
   },
   "keywords": [],
-  "author": "",
+  "homepage": "https://romanpalna.github.io/goit-js-hw-12-countries-2",
+  "author": "Palna Roman",
   "license": "ISC",
   "dependencies": {
+    "gh-pages": "^3.1.0",
     "handlebars": "^4.7.6",
     "lodash.debounce": "^4.0.8",
     "material-design-icons": "^3.0.1",
@@ -21,5 +28,16 @@
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-handlebars-precompile": "^1.0.2"
   },
-  "description": ""
+  "description": "",
+   "customDistStructure": {
+    "config": {
+      ".css": "css",
+      ".js": "js",
+      "images": [
+        ".jpg",
+        ".svg",
+        ".png"
+      ]
+    }
+  }
 }
