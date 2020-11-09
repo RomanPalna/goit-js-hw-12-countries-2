@@ -2931,7 +2931,7 @@ function countrySearchMarkup(countries) {
 function countryChanger(countries) {
   if (countries.length >= 2 && countries.length <= 10) {
     countrySearchMarkup(countries);
-  } else if (countries.length = 1) {
+  } else if (countries.length === 1) {
     countryMarkup(countries);
   } else {
     (0, _core.alert)({
@@ -2967,7 +2967,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50970" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54214" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
