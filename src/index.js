@@ -52,7 +52,7 @@ function countrySearchMarkup(countries) {
 function countryChanger(countries) {
   if (countries.length >= 2 && countries.length <= 10) {
     countrySearchMarkup(countries);
-  } else if ((countries.length = 1)) {
+  } else if (countries.length === 1) {
     countryMarkup(countries);
   } else {
     alert({
