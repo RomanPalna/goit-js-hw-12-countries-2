@@ -4,6 +4,10 @@ const countryApiService = new ApiService();
 const debounce = require('lodash.debounce');
 import countryCardTpl from './templates/main.hbs';
 import countrySearch from './templates/search.hbs';
+// Error settings
+import { error, alert } from '@pnotify/core';
+import '@pnotify/core/dist/BrightTheme.css';
+import '@pnotify/core/dist/Material.css';
 
 const refs = {
   inputSearch: document.querySelector('.input-search'),
@@ -21,7 +25,11 @@ function onSearch(event) {
   countryApiService
     .fetchCountries(searchQuery)
     .then(countryChanger)
-    .catch(myError);
+    .catch(() =>
+      error({
+        text: 'Country is not defined!',
+      }),
+    );
 }
 
 //hanlebars Markup
@@ -47,19 +55,8 @@ function countryChanger(countries) {
   } else if ((countries.length = 1)) {
     countryMarkup(countries);
   } else {
-    myAlert;
+    alert({
+      text: 'To many matches found. Please enter a more specific query!',
+    });
   }
 }
-
-// Error settings
-import { error, alert } from '@pnotify/core';
-import '@pnotify/core/dist/BrightTheme.css';
-import '@pnotify/core/dist/Material.css';
-
-const myError = error({
-  text: 'Country is not defined!',
-});
-
-const myAlert = alert({
-  text: 'To many matches found. Please enter a more specific query!',
-});
