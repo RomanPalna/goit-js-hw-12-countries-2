@@ -2877,12 +2877,20 @@ var global = arguments[3];
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
       
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/@pnotify/core/dist/PNotify.css":[function(require,module,exports) {
+
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
 },{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("./main.css");
 
 var _fetchCountries = _interopRequireDefault(require("./fetchCountries"));
+
+var _lodash = _interopRequireDefault(require("lodash.debounce"));
 
 var _main2 = _interopRequireDefault(require("./templates/main.hbs"));
 
@@ -2894,22 +2902,27 @@ require("@pnotify/core/dist/BrightTheme.css");
 
 require("@pnotify/core/dist/Material.css");
 
+require("@pnotify/core/dist/PNotify.css");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var countryApiService = new _fetchCountries.default();
-
-var debounce = require('lodash.debounce');
-
 var refs = {
   inputSearch: document.querySelector('.input-search'),
   countryContainer: document.querySelector('.container')
 }; // Search
 
-refs.inputSearch.addEventListener('input', debounce(onSearch, 500));
+refs.inputSearch.addEventListener('input', (0, _lodash.default)(onSearch, 500));
 
 function onSearch(event) {
   event.preventDefault();
+  refs.countryContainer.innerHTML = '';
   var searchQuery = refs.inputSearch.elements.query.value;
+
+  if (!searchQuery) {
+    return;
+  }
+
   countryApiService.fetchCountries(searchQuery).then(countryChanger).catch(function () {
     return (0, _core.error)({
       text: 'Country is not defined!'
@@ -2919,12 +2932,10 @@ function onSearch(event) {
 
 
 function countryMarkup(countries) {
-  refs.countryContainer.innerHTML = '';
   refs.countryContainer.insertAdjacentHTML('beforeend', (0, _main2.default)(countries));
 }
 
 function countrySearchMarkup(countries) {
-  refs.countryContainer.innerHTML = '';
   refs.countryContainer.insertAdjacentHTML('beforeend', (0, _search.default)(countries));
 }
 
@@ -2939,7 +2950,7 @@ function countryChanger(countries) {
     });
   }
 }
-},{"./main.css":"main.css","./fetchCountries":"fetchCountries.js","lodash.debounce":"../node_modules/lodash.debounce/index.js","./templates/main.hbs":"templates/main.hbs","./templates/search.hbs":"templates/search.hbs","@pnotify/core":"../node_modules/@pnotify/core/dist/PNotify.js","@pnotify/core/dist/BrightTheme.css":"../node_modules/@pnotify/core/dist/BrightTheme.css","@pnotify/core/dist/Material.css":"../node_modules/@pnotify/core/dist/Material.css"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./main.css":"main.css","./fetchCountries":"fetchCountries.js","lodash.debounce":"../node_modules/lodash.debounce/index.js","./templates/main.hbs":"templates/main.hbs","./templates/search.hbs":"templates/search.hbs","@pnotify/core":"../node_modules/@pnotify/core/dist/PNotify.js","@pnotify/core/dist/BrightTheme.css":"../node_modules/@pnotify/core/dist/BrightTheme.css","@pnotify/core/dist/Material.css":"../node_modules/@pnotify/core/dist/Material.css","@pnotify/core/dist/PNotify.css":"../node_modules/@pnotify/core/dist/PNotify.css"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -2967,7 +2978,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54214" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57192" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
